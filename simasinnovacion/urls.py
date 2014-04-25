@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.views.generic import TemplateView
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from settings import *
 
@@ -14,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^', include('politicas.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^chaining/', include('smart_selects.urls')),
+    url(r'^seleccion/$', TemplateView.as_view(template_name="seleccion.html")),
 )
 
 urlpatterns += staticfiles_urlpatterns()

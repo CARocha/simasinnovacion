@@ -1,0 +1,266 @@
+{% extends "base_menu.html" %}
+
+{% block title %}
+    {{promotor.nombre}}
+{% endblock title %}
+
+{% block extra_js %}
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1', {'packages':['corechart']});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = new google.visualization.arrayToDataTable([
+          ['Tipo', 'Valor', { role: 'style' }],
+          ['Bosque', {{fpromotor.bosque}}, 'color: #ea6753'],
+          ['Potrero con arboles', {{fpromotor.potrero}}, 'color: #ea6753'],
+          ['Tacotales', {{fpromotor.tacotales}}, 'color: #ea6753'],
+          ['Forestal', {{fpromotor.forestal}}, 'color: #ea6753'],
+          ['Cultivos perennes', {{fpromotor.perennes}}, 'color: #ea6753'],
+          ['Plantacion para leña', {{fpromotor.lena}}, 'color: #ea6753'],
+          ['Cultivos anuales', {{fpromotor.anuales}}, 'color: #ea6753'],
+          ['Frutales', {{fpromotor.frutales}}, 'color: #ea6753'],
+          ['Potrero abierto', {{fpromotor.potrero_abierto}}, 'color: #ea6753'],
+          ['Cultivos patio', {{fpromotor.patio}}, 'color: #ea6753']
+        ]);
+        var options = {'title':'Uso de tierra',
+                        hAxis: {title: "Mz"},
+                        //backgroundColor: '#242421',
+                        colors: ['red','#004411'],
+                        bar: {groupWidth: "35%"},
+                        legend: { position: "none" },
+                        annotations: {
+                        textStyle: {
+                          fontSize: 18,
+                          bold: true,
+                          color: '#871b47',     // The color of the text.
+                        }
+                      },
+                   };
+
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+  
+{% endblock extra_js %}
+{% load staticfiles %}
+{% load thumbnail %}
+{% block contenido %}
+<div class="large-12 columns">
+	<div class="large-3 columns">
+		<ul class="side-nav menu" id="men">
+		  <li class="menu-titulo"><a href="#">Innovando Practicas Productivas</a></li>
+          <li><a href="/gpromotor">Estadisticas Generales</a></li>
+          <li><a href="#" class="active">Promotoras y promotores</a></li>
+          <li><a href="#">Pruebas de practicas productivas</a></li>
+        <br/>
+          <li class="menu-titulo"><a href="#">Innovando Practicas Empresariales</a></li>
+          <li><a href="/gempresas">Estadisticas Generales</a></li>
+          <li><a href="#">Empresas Rurales</a></li>
+          <li><a href="#">Mejoras para Innovar</a></li>
+        <br/>
+          <li class="menu-titulo"><a href="#">Innovando Politicas</a></li>
+          <li><a href="/gespacios">Estadisticas Generales</a></li>
+          <li><a href="#">Espacios para Innovar</a></li>
+          <li><a href="#">Iniciativas para Innovar</a></li>
+        <br/>
+          <li class="menu-titulo"><a href="#">Fortaleciendo Capacidades</a></li>
+          <li><a href="/gservicios">Estadisticas Generales</a></li>
+          <li><a href="#">Conocimientos de Actores</a></li>
+          <li><a href="#">Servicios para Mejorar Org.</a></li>
+		</ul>
+	</div>
+	<div class="large-9 columns" id="cont">
+		<div class="row ">
+			<div class="large-12 columns">
+				<p class="ptitulo">Promotoras y promotores</p>
+				<hr/>
+				<div class="large-1 columns">
+					<img src="{%static 'img/fpromotor.png' %}" alt="Ficha Promotor"/>
+				</div>
+				<div class="large-11 columns">
+					<p class="pmtr">Promotor</p>
+					<p class="npmtr">{{fpromotor.nombre}}</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="row ">
+			<div class="large-12 columns">
+				<div class="large-11 columns">
+					<table class="pdatos">
+						<thead>
+							<tr>
+								<th width="120px" class="pdatosh">Departamento</th>
+								<th width="120px" class="pdatosh">Municipio</th>
+								<th width="180px" class="pdatosh">Organizacion Campesina</th>
+								<th width="170px" class="pdatosh">Organizacion de Apoyo</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="pdatosb">{{fpromotor.departamento}}</td>
+								<td class="pdatosb">{{fpromotor.municipio}}</td>
+								<td class="pdatosb">{{fpromotor.organizacion_campesina}}</td>
+								<td class="pdatosb">{{fpromotor.organizacion_civil}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row ">
+			<div class="large-12 columns">
+				<div class="row ">
+					<div class="large-7 columns">
+						<div class="ficha-elem">
+							<table class="tpromotor">
+								<tr>
+									<td class="tpromotort">Tipo de Suelo</td>
+									<td class="tpromotord">{{fpromotor.tipo_suelo}}</td>
+								</tr>
+								<tr>
+									<td class="tpromotort">Tipo de Clima</td>
+									<td class="tpromotord">{{fpromotor.get_tipo_clima_display}}</td>
+								</tr>
+								<tr>
+									<td class="tpromotort">Meses de Lluvia</td>
+									<td class="tpromotord">{{fpromotor.meses_lluvia}} Meses</td>
+								</tr>
+								<tr>
+									<td class="tpromotort">Tamaño de Finca</td>
+									<td class="tpromotord">{{fpromotor.finca}} Mz</td>
+								</tr>
+								<tr>
+									<td class="tpromotort">Acceso Riego</td>
+									<td class="tpromotord">{{fpromotor.get_riego_display}}</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div class="large-5 columns">
+						{% if fpromotor.get_fotos %}
+						<div class="ficha-slid">
+							<ul class="example-orbit" data-orbit data-options="navigation-arrows:true;bullets: false">
+                        		{% for obj in fpromotor.get_fotos %}
+                        			{% thumbnail obj.foto "450x350" crop="10%" as img%}
+                        		<li>
+                          			<a class="fancybox-effects-d" data-fancybox-group="gallery" href="/media/{{obj.foto}}" title="{{obj.nombre}}"><img src="/media/{{img}}"></a>      
+                      			</li>
+                        			{% endthumbnail %}
+                        		{% endfor %}
+							</ul>
+
+						</div>
+                        {% else %}
+                        <div class="ficha-slid">
+                            <p>No tiene imagenes</p>
+                        </div>
+                        {% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row ">
+			<div class="large-12 columns">
+				<div class="row ">
+					<div class="large-6 columns">
+						<div class="cap">
+							<div>
+								<p class="ptittle fpt">Cultivos</p>
+									<div class="product">
+										{% for cultivo in fpromotor.cultivos_finca.all %}
+                                        <img src="/media/{{cultivo.image_cultivos}}">
+										<span>{{cultivo}}</span>
+                                        {% empty %}
+										<span>No tienen cultivos en la finca</span>
+                                        {% endfor %}
+									</div>									
+							</div>
+							<hr/>
+							<div>
+								<p class="ptittle">Animales</p>
+								<div class="product">
+									{% for animales in fpromotor.animales_finca.all %}
+									<img src="/media/{{animales.image_animales}}">
+									<span>{{animales}}</span>
+									{% empty %}
+                  					<span>No tienen animales en al finca</span>
+              						{% endfor %}
+								</div>								
+							</div>
+							<hr/>
+							<div>
+								<p class="ptittle">Productos procesados</p>
+									<div class="product">
+										{% for producto in fpromotor.producto_procesado.all %}
+										<span class="prod-otrs">{{producto}}</span>
+										{% empty %}
+										<span class="prod-otrs">No tiene producto procesado</span>
+										{% endfor %}
+									</div>
+							</div>
+						</div>
+					</div>
+					<div class="large-6 columns">
+						<div class="chart">
+							<div id="chart_div"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row ">
+			<div class="large-12 columns">
+				<div class="large-9 columns">
+					<p class="pruebasr"><img src="{% static 'img/lista.png' %}" alt="Lista"> Listas de Pruebas Realizadas</p>
+				</div>
+				<div class="large-1 columns">
+					<a href="?year=2014#practicas" class="button bty">2014</a>
+				</div>
+				<div class="large-1 columns">
+					<a href="?year=2013#practicas" class="button bty">2013</a>
+				</div>
+				<div class="large-1 columns">
+					<a href="?year=2012#practicas" class="button bty">2012</a>
+				</div>
+			</div>
+		</div>
+		<div class="row ">
+			<div class="large-12 columns">
+				<table class="tpruebasr" id="practicas">
+					<thead>
+						<tr>
+							<th class="tpruebasrh">Año Activo</th>
+							<th class="tpruebasrh">Nombre de Prueba</th>
+							<th class="tpruebasrh">Tema</th>
+							<th class="tpruebasrh">Rubro</th>
+							<th class="tpruebasrh">Escala</th>
+							<th class="tpruebasrh">Inicio</th>
+							<th class="tpruebasrh">Fin</th>
+						</tr>
+					</thead>
+					<tbody class="tpruebasrb">
+                        {% if fpromotor.practicasproductivas_set.all %}
+						{% for lista in practicas_productivas_queryset %}
+						<tr>
+							<td>{{lista.fecha_prueba}}</td>
+							<td><a class="pp" href="/fprueba/{{lista.id}}/">{{lista.nombre_prueba}}</a></td>
+							<td>{{lista.tema_prueba}}</td>
+							<td>{{lista.rubro_prueba}}</td>
+							<td>{{lista.escala_prueba}}</td>
+							<td>{{lista.fecha_inicio}}</td>
+							<td>{{lista.fecha_finalizacion}}</td>
+						</tr>
+						{% endfor %}
+                        {% endif %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock contenido %}
