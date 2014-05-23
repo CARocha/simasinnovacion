@@ -10,4 +10,9 @@ urlpatterns = patterns('politicas.views',
     url(r'^iniciativa/(?P<id>\w+)/$', 'iniciativa_pagina', name="practica_pagina"),
     url(r'^mapa_completo_espacios/$', 'mapa_completo_espacios', name="mapa-completo-espacios"),
     url(r'^iniciativa/$', 'iniciativa_index', name="lista-iniciativa"),
+    #Cambios Kronos Code
+    url(r'^espacio/$', 'espacio', name="listar_espacios"),
+    url(r'^fespacio/(?P<id>\w+)/$', 'fespacio', name="fespacio"),
+    url(r'^iniciativas/$', 'iniciativas', name="listar_iniciativas"),
+    url(r'^finiciativa/(?P<id>\w+)/$', 'finiciativa', name="finiciativa"),
     )

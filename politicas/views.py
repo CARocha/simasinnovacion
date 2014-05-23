@@ -119,3 +119,62 @@ def iniciativa_index(request, template="innovacion/iniciativas.html"):
 def iniciativa_pagina(request, id, template="innovacion/ficha_iniciativa.html"):
     iniciativa = get_object_or_404(IniciativaInnovacion, id=id)
     return render(request, template, {'iniciativa':iniciativa})
+
+    #===================================
+    #Cambios Kronos Code
+
+def espacio(request, template="espacio.html"):
+    if request.method == 'POST':
+        form = EspacioForm(request.POST)
+        if form.is_valid():
+            request.session['zona'] = form.cleaned_data['zona']            
+            request.session['cobertura'] = form.cleaned_data['cobertura']
+            request.session['activos'] = form.cleaned_data['activos']
+            request.session['tipos'] = form.cleaned_data['tipos']
+            request.session['bandera'] = 1
+    else:
+        form = EspacioForm()
+        request.session['bandera'] = 0
+
+    if request.session['bandera'] == 1:
+        con = _queryset_filtrado(request)
+    else:
+        con = ''           
+
+    return render(request, template, {'form':form,
+                                      'listar_espacio':con})
+
+def fespacio(request, id, template="fespacio.html"):
+    fespacio = get_object_or_404(EspacioInnovacion, id=id)
+    year = request.GET.get('year', None) 
+    ficha_iniciativa_queryset = fespacio.iniciativainnovacion_set.all()
+
+    if year:
+        ficha_iniciativa_queryset = ficha_iniciativa_queryset.filter(fecha__year=year)
+
+    return render(request, template, locals())
+
+def iniciativas(request, template="iniciativas.html"):
+    if request.method == 'POST':
+        form = IniciativaForm(request.POST)
+        if form.is_valid():
+            request.session['tipo'] = form.cleaned_data['tipo']
+            request.session['tema'] = form.cleaned_data['tema']     
+            request.session['cobertura'] = form.cleaned_data['cobertura']
+            request.session['activos'] = form.cleaned_data['activos']
+            request.session['bandera'] = 1
+    else:
+        form = IniciativaForm()
+        request.session['bandera'] = 0
+
+    if request.session['bandera'] == 1:
+        con = _queryset_filtrado_iniciativa(request)
+    else:
+        con = ''           
+
+    return render(request, template, {'form':form,
+                                      'listar_iniciativas':con})
+
+def finiciativa(request, id, template="finiciativa.html"):
+    finiciativa = get_object_or_404(IniciativaInnovacion, id=id)
+    return render(request, template, {'finiciativa':finiciativa})
