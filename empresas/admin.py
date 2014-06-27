@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import *
+from django.forms import CheckboxSelectMultiple
 
 class RubrosPrincipalesInlines(admin.TabularInline):
     model = RubrosPrincipales
@@ -8,23 +9,35 @@ class RubrosPrincipalesInlines(admin.TabularInline):
 
 class ActividadEmpresarialInlines(admin.TabularInline):
     model = ActividadEmpresarial
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': CheckboxSelectMultiple},
+    }
     extra = 1
-    max_num = 7
+    max_num = 3
 
 class MercadosRubrosInlines(admin.TabularInline):
     model = MercadosRubros
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': CheckboxSelectMultiple},
+    }
     extra = 1
-    max_num = 7
+    max_num = 3
 
 class CompradoresRubrosInlines(admin.TabularInline):
     model = CompradoresRubros
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': CheckboxSelectMultiple},
+    }
     extra = 1
-    max_num = 7
+    max_num = 3
 
 class CertificacionesRubrosInlines(admin.TabularInline):
     model = CertificacionesRubros
+    formfield_overrides = {
+        models.ManyToManyField: {'widget': CheckboxSelectMultiple},
+    }
     extra = 1
-    max_num = 7
+    max_num = 3
 
 class FotosActividadEmpresarialInlines(admin.TabularInline):
     model = FotosActividadEmpresarial

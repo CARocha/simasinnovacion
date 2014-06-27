@@ -2,6 +2,7 @@
 #
 from django.contrib import admin
 from .models import *
+from django.forms import CheckboxSelectMultiple
 
 class IniciativaInnovacionInline(admin.TabularInline):
 	model = IniciativaInnovacion
@@ -14,7 +15,11 @@ class FotosInnovacionInline(admin.TabularInline):
 
 class ActividadEmpresarialInline(admin.TabularInline):
 	model = ActividadEmpresarial
+	formfield_overrides = {
+        models.ManyToManyField: {'widget': CheckboxSelectMultiple},
+    }
 	extra = 1
+	max_num = 3
 
 class EspacioInnovacionAdmin(admin.ModelAdmin):
 	filter_horizontal = ('departamento_influye','municipios_influye',
@@ -49,6 +54,7 @@ class FotosInicitivasInline(admin.TabularInline):
 	extra = 1
 
 class IniciativaInnovacionAdmin(admin.ModelAdmin):
+	filter_horizontal = ('temas','actividades')
 	fieldsets = (
 		(None, {
 			'fields': (('fecha', 'nombre', 'espacio'),

@@ -77,7 +77,7 @@ class Empresas(models.Model):
 
 class RubrosPrincipales(models.Model):
     empresa = models.ForeignKey(Empresas)
-    prioridad = models.IntegerField(choices=((1, '1'),(2, '2'),(3, '3'),))
+    #prioridad = models.IntegerField(choices=((1, '1'),(2, '2'),(3, '3'),))
     rubro = models.ForeignKey(Rubros)
     volumen = models.FloatField('Volumen de venta (unidad)')
     monto = models.FloatField('Monto de venta C$')
@@ -85,7 +85,7 @@ class RubrosPrincipales(models.Model):
     socias = models.IntegerField()
 
     def __unicode__(self):
-        return u'%s' % str(self.prioridad)
+        return u'%s' % str(self.empresa)
 
     class Meta:
         verbose_name_plural = "Rubros principales de la empresa" 
@@ -133,40 +133,44 @@ CHOICES_SI_N0=(
 
 class ActividadEmpresarial(models.Model):
     empresa = models.ForeignKey(Empresas)
-    actividad = models.ForeignKey(ActividadesEmpresariales)
-    rubro_1 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
-    rubro_2 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
-    rubro_3 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
+    rubros = models.ForeignKey(Rubros)
+    actividad = models.ManyToManyField(ActividadesEmpresariales)
+    #rubro_1 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
+    #rubro_2 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
+    #rubro_3 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "Actividad empresarial relacionadas a los rubros"
 
 class MercadosRubros(models.Model):
     empresa = models.ForeignKey(Empresas)
-    mercado = models.ForeignKey(Mercados)
-    rubro_1 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
-    rubro_2 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
-    rubro_3 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
+    rubros = models.ForeignKey(Rubros)
+    mercado = models.ManyToManyField(Mercados)
+    #rubro_1 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
+    #rubro_2 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
+    #rubro_3 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "Mercados de los rubros"
 
 class CompradoresRubros(models.Model):
     empresa = models.ForeignKey(Empresas)
-    mercado = models.ForeignKey(MercadosCompradores)
-    rubro_1 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
-    rubro_2 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
-    rubro_3 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
+    rubros = models.ForeignKey(Rubros)
+    mercado = models.ManyToManyField(MercadosCompradores)
+    #rubro_1 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
+    #rubro_2 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
+    #rubro_3 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "Compradores de los rubros"
 
 class CertificacionesRubros(models.Model):
     empresa = models.ForeignKey(Empresas)
-    certificaciones = models.ForeignKey(Certificaciones)
-    rubro_1 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
-    rubro_2 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
-    rubro_3 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
+    rubros = models.ForeignKey(Rubros)
+    certificaciones = models.ManyToManyField(Certificaciones)
+    #rubro_1 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
+    #rubro_2 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
+    #rubro_3 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "Certificaciones de los rubros"

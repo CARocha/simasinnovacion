@@ -95,13 +95,14 @@ CHOICES_SI_N0=(
 
 class ActividadEmpresarial(models.Model):
     espacio = models.ForeignKey(EspacioInnovacion)
-    actividad = models.ForeignKey(ActividadesEspacio)
-    tema_1 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
-    tema_2 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
-    tema_3 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
+    temas = models.ForeignKey(TemasIncidencia)
+    actividad = models.ManyToManyField(ActividadesEspacio)
+    #tema_1 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
+    #tema_2 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
+    #tema_3 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
 
     class Meta:
-        verbose_name_plural = "Actividad empresarial relacionadas a los rubros"
+        verbose_name_plural = "Actividad empresarial relacionadas a los temas"
 
 class FotosInnovacion(models.Model):
     espacio = models.ForeignKey(EspacioInnovacion)

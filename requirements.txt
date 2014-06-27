@@ -1,0 +1,6 @@
+Django==1.5.8
+Pillow==2.4.0
+South==0.8.4
+django-smart-selects==1.0.9
+sorl-thumbnail==11.12
+wsgiref==0.1.2
