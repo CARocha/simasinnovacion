@@ -214,35 +214,23 @@
                 <table class="tpruebasr">
                     <thead>
                         <tr>
-                            <th class="tpruebasrh">Actividad</th>
-                            <th class="tpruebasrh">Tema 1</th>
-                            <th class="tpruebasrh">Tema 2</th>
-                            <th class="tpruebasrh">Tema 3</th>
+                            <th class="tpruebasrh">Temas</th>
+                            {% for lista in actividades %}
+                            <th class="tpruebasrh">{{lista}}</th>
+                            {% endfor %}
                         </tr>
                     </thead>
                     <tbody class="tpruebasrb">
-                        {% if fespacio.actividadempresarial_set.all %}
-                        {% for lista in fespacio.actividadempresarial_set.all %}
-                        <tr>
-                            <td>{{lista.actividad}}</td>
-                            {% if lista.tema_1 == 1%}
-                            <td><img src="{% static 'img/si.png' %}"></td>
-                            {%else%}
-                            <td><img src="{% static 'img/no.png' %}"</td>
-                            {% endif %}
-                            {% if lista.tema_2 == 1%}
-                            <td><img src="{% static 'img/si.png' %}"></td>
-                            {%else%}
-                            <td><img src="{% static 'img/no.png' %}"</td>
-                            {% endif %}
-                            {% if lista.tema_3 == 1%}
-                            <td><img src="{% static 'img/si.png' %}"></td>
-                            {%else%}
-                            <td><img src="{% static 'img/no.png' %}"</td>
-                            {% endif %}
-                        </tr>
+                        {% for recorrer in fespacio.actividadempresarial_set.all %}
+                            <tr>   
+                                <td>{{recorrer.temas}}</td>
+                                <td><img src="{% static 'img/no.png' %}"></td>
+                                <td><img src="{% static 'img/no.png' %}"></td>
+                                <td><img src="{% static 'img/si.png' %}"></td>
+                                <td><img src="{% static 'img/no.png' %}"></td>
+                                <td><img src="{% static 'img/no.png' %}"></td>
+                            </tr>
                         {% endfor %}
-                        {% endif %}
                     </tbody>
                 </table>
             </div>

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render, get_object_or_404
-from .models import EspacioInnovacion, IniciativaInnovacion
+from .models import EspacioInnovacion, IniciativaInnovacion, ActividadesEspacio
 from .forms import EspacioForm, IniciativaForm
 import json
 from django.http import HttpResponse
@@ -146,6 +146,7 @@ def espacio(request, template="espacio.html"):
 
 def fespacio(request, id, template="fespacio.html"):
     fespacio = get_object_or_404(EspacioInnovacion, id=id)
+    actividades = ActividadesEspacio.objects.all()
     year = request.GET.get('year', None) 
     ficha_iniciativa_queryset = fespacio.iniciativainnovacion_set.all()
 

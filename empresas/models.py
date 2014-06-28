@@ -21,11 +21,12 @@ class TipoEmpresa(models.Model):
 
 class Rubros(models.Model):
     nombre = models.CharField(max_length=200)
+    unidad_medida = models.CharField(max_length=50, blank=True, null=True)
     #Kronos Code Cambio Image Upload for rubros
     imagen = models.ImageField(upload_to='rubros/', blank=True, null=True)
 
     def __unicode__(self):
-        return self.nombre
+        return u'%s' % (self.nombre)
 
     class Meta:
         verbose_name_plural = "Rubros"
@@ -85,7 +86,7 @@ class RubrosPrincipales(models.Model):
     socias = models.IntegerField()
 
     def __unicode__(self):
-        return u'%s' % str(self.empresa)
+        return u'%s' % str(self.rubro)
 
     class Meta:
         verbose_name_plural = "Rubros principales de la empresa" 

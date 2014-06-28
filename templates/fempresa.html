@@ -152,7 +152,9 @@
                                 <div class="product">
                                     {% for actividad in fempresa.actividadempresarial_set.all %}
                                     <div class="prod-otrs">
-                                        <span class="">{{actividad.actividad}}</span>
+                                        <span class="">{% for actividad in actividad.actividad.all %}
+                                            {{actividad}} {%endfor%}
+                                        </span>
                                     </div>                                  
                                     {% empty %}
                                     <span>No tienen actividades en la finca</span>
@@ -170,7 +172,10 @@
                                     <div class="product">
                                         {% for mercado in  fempresa.mercadosrubros_set.all %}
                                         <div class="prod-otrs">
-                                            <span class="">{{mercado.mercado}}</span>
+                                            <span class="">{% for mercado in mercado.mercado.all %}
+                                                {{mercado}}
+                                                {% endfor%}
+                                            </span>
                                         </div>                                       
                                         {% empty %}
                                         <span>No tienen mercados en la empresa</span>
@@ -204,7 +209,9 @@
                             <hr>
                             {% for certificado in fempresa.certificacionesrubros_set.all %}
                             <div class="finter-text">
-                                <span class="">{{certificado.certificaciones}}</span>
+                                <span class="">{% for certificado in certificado.certificaciones.all %}
+                                    {{certificado}} {%endfor%}
+                                </span>
                             </div>
                             <div class="clear"></div>
                             {% empty %}
@@ -218,9 +225,9 @@
                         <div class="fichainterna">
                             <p class="ptittle fpt">Volumen de venta anual</p>
                             <hr>
-                            {% for volumen in fempresa.certificacionesrubros_set.all %}
+                            {% for volumen in fempresa.rubrosprincipales_set.all %}
                             <div class="finter-text">
-                                <span class="">{{certificado.certificaciones}}</span>
+                                <span class="">{{volumen.volumen}}</span>
                             </div>
                             {% empty %}
                             <p>Aun no tienen volumen de venta</p>
@@ -230,11 +237,25 @@
                     </div>
                     <div class="large-4 columns">
                         <div class="fichainterna">
-                            <p class="ptittle fpt">Involucrados</p>
+                            <p class="ptittle fpt">Involucrados Hombres</p>
                             <hr>
-                            {% for involucrado in fempresa.certificacionesrubros_set.all %}
+                            {% for involucrado in fempresa.rubrosprincipales_set.all %}
                             <div class="finter-text">
-                                <span>{{certificado.certificaciones}}</span>
+                                <span>{{involucrado.socios}}</span>
+                            </div>
+                            {% empty %}
+                            <p>Aun no tienen involucrados</p>
+                            {% endfor %}
+                            <div class="clear"></div>
+                        </div>                        
+                    </div>
+                    <div class="large-4 columns">
+                        <div class="fichainterna">
+                            <p class="ptittle fpt">Involucrados Mujeres</p>
+                            <hr>
+                            {% for involucrado in fempresa.rubrosprincipales_set.all %}
+                            <div class="finter-text">
+                                <span>{{involucrado.socias}}</span>
                             </div>
                             {% empty %}
                             <p>Aun no tienen involucrados</p>

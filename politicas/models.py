@@ -97,9 +97,9 @@ class ActividadEmpresarial(models.Model):
     espacio = models.ForeignKey(EspacioInnovacion)
     temas = models.ForeignKey(TemasIncidencia)
     actividad = models.ManyToManyField(ActividadesEspacio)
-    #tema_1 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
-    #tema_2 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
-    #tema_3 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
+
+    def __unicode__(self):
+        return u'%s' % (self.temas)
 
     class Meta:
         verbose_name_plural = "Actividad empresarial relacionadas a los temas"
