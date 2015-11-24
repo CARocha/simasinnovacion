@@ -28,7 +28,7 @@ class PromotorAdmin(admin.ModelAdmin):
                         'producto_procesado','mercado_accede')
     fieldsets = (
         (None, {
-            'fields': (('nombre', 'sexo', 'edad'), ('educacion','contacto','activo'),
+            'fields': (('nombre', 'sexo', 'innovador', 'edad'), ('educacion','contacto','activo'),
                       ('zona', 'departamento', 'municipio'),'gps',('organizacion_campesina',
                       'organizacion_civil','escuela','tipo_suelo','tipo_clima'),
                       ('meses_lluvia','finca','riego'),)

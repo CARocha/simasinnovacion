@@ -96,11 +96,14 @@ class TipoSuelo(models.Model):
 
     class Meta:
         verbose_name_plural = "Tipos de suelos"
+
+CHOICE_INNOVADOR = ((1,"Si"), (2, "No"))
 #--------------------------------------------------
         #modelo de promotor 
 #--------------------------------------------------
 class Promotor(models.Model):
     nombre = models.CharField(max_length=200)
+    innovador = models.IntegerField(choices=CHOICE_INNOVADOR, null=True, blank=True)
     sexo = models.IntegerField(choices=((1,'Masculino'),(2, 'Femenino')))
     edad = models.IntegerField()
     educacion = models.IntegerField('Nivel de educación formal', 
