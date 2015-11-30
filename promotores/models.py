@@ -267,7 +267,7 @@ class DiasCampoPrueba(models.Model):
     comentario = models.TextField()
 
     def __unicode__(self):
-        return 'Dias de campos de: %s' % self.prueba
+        return u'Dias de campos de: %s' % (self.prueba)
 
     class Meta:
         verbose_name_plural = "Dias de campos de las pruebas"
