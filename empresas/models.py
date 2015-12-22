@@ -168,7 +168,7 @@ class CompradoresRubros(models.Model):
     #rubro_3 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
 
     def __unicode__(self):
-        return u'%s' % (self.rubros)
+        return u'%s' % self.rubros
 
     class Meta:
         verbose_name_plural = "Compradores de los rubros"
@@ -182,7 +182,7 @@ class CertificacionesRubros(models.Model):
     #rubro_3 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
 
     def __unicode__(self):
-        return u'%s' % (self.rubros)
+        return u'%s' % self.rubros
 
     class Meta:
         verbose_name_plural = "Certificaciones de los rubros"
