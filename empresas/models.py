@@ -5,7 +5,7 @@ from lugar.models import Departamento, Municipio
 from smart_selects.db_fields import ChainedForeignKey
 from geoposition.fields import GeopositionField
 from sorl.thumbnail import ImageField
-from simasinnovacion.utils import get_file_path 
+from simasinnovacion.utils import get_file_path
 from promotores.models import OrganizacionCivil
 from django.contrib.auth.models import User
 
@@ -89,7 +89,7 @@ class RubrosPrincipales(models.Model):
         return u'%s' % str(self.rubro)
 
     class Meta:
-        verbose_name_plural = "Rubros principales de la empresa" 
+        verbose_name_plural = "Rubros principales de la empresa"
 
 class ActividadesEmpresariales(models.Model):
     nombre = models.CharField(max_length=200)
@@ -140,6 +140,9 @@ class ActividadEmpresarial(models.Model):
     #rubro_2 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
     #rubro_3 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
 
+    def __unicode__(self):
+        return u'%s' % (self.rubros)
+
     class Meta:
         verbose_name_plural = "Actividad empresarial relacionadas a los rubros"
 
@@ -150,6 +153,9 @@ class MercadosRubros(models.Model):
     #rubro_1 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
     #rubro_2 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
     #rubro_3 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
+
+    def __unicode__(self):
+        return u'%s' % (self.rubros)
 
     class Meta:
         verbose_name_plural = "Mercados de los rubros"
@@ -162,6 +168,9 @@ class CompradoresRubros(models.Model):
     #rubro_2 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
     #rubro_3 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
 
+    def __unicode__(self):
+        return u'%s' % (self.rubros)
+
     class Meta:
         verbose_name_plural = "Compradores de los rubros"
 
@@ -172,6 +181,9 @@ class CertificacionesRubros(models.Model):
     #rubro_1 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
     #rubro_2 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
     #rubro_3 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
+
+    def __unicode__(self):
+        return u'%s' % (self.rubros)
 
     class Meta:
         verbose_name_plural = "Certificaciones de los rubros"
