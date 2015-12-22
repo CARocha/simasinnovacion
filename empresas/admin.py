@@ -59,8 +59,9 @@ class EmpresasAdmin(admin.ModelAdmin):
         }),
         )
     inlines = [RubrosPrincipalesInlines,ActividadEmpresarialInlines,
-               MercadosRubrosInlines,CertificacionesRubrosInlines,
-               FotosActividadEmpresarialInlines,MejoraEmpresaInline]
+               MercadosRubrosInlines,CompradoresRubrosInlines,
+               CertificacionesRubrosInlines,FotosActividadEmpresarialInlines,
+               MejoraEmpresaInline]
     list_display = ['nombre', 'tipo','zona','departamento']
     list_filter = ['nombre', 'zona']
     search_fields = ['nombre']
