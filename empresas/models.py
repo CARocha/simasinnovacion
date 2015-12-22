@@ -29,6 +29,7 @@ class Rubros(models.Model):
 
     class Meta:
         verbose_name_plural = "Rubros"
+        ordering = ('nombre', )
 
 #-----------------------------------------------------------
 #                  ficha de las empresas rurales
