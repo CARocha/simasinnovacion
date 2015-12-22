@@ -86,7 +86,7 @@ class RubrosPrincipales(models.Model):
     socias = models.IntegerField()
 
     def __unicode__(self):
-        return u'%s' % str(self.rubro)
+        return u'%s' % (self.rubro)
 
     class Meta:
         verbose_name_plural = "Rubros principales de la empresa"
