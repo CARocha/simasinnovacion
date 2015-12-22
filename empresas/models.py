@@ -154,7 +154,7 @@ class MercadosRubros(models.Model):
     #rubro_3 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
 
     def __unicode__(self):
-        return u'%s' % (self.rubros)
+        return u'%s -- %s' % (self.rubros, self.empresa)
 
     class Meta:
         verbose_name_plural = "Mercados de los rubros"
