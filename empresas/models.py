@@ -253,7 +253,7 @@ class MejoraEmpresas(models.Model):
     color_completo.short_description = 'Ficha completa'
 
     def __unicode__(self):
-        return u'%s' % (self.nombre_mejora)
+        return u'%s' % self.nombre_mejora
 
     def get_fotos(self):
         fotos = FotosMejoraEmpresa.objects.filter(mejora_empresa__id = self.id)
@@ -271,7 +271,7 @@ class DiasCampoEmpresa(models.Model):
     comentario = models.TextField()
 
     def __unicode__(self):
-        return 'Dias de campos de: %s' % self.mejora_empresa
+        return u'Dias de campos de: %s' % self.mejora_empresa
 
     class Meta:
         verbose_name_plural = "Dias de campos de las pruebas"
