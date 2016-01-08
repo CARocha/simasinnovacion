@@ -76,7 +76,7 @@ admin.site.register(MercadosCompradores)
 admin.site.register(Certificaciones)
 admin.site.register(ActividadEmpresarial)
 admin.site.register(MercadosRubros)
-#admin.site.register(CompradoresRubros)
+admin.site.register(CompradoresRubros)
 admin.site.register(CertificacionesRubros)
 admin.site.register(FotosActividadEmpresarial)
 #-------------- admin de mejora empresarial -----------------------
@@ -87,11 +87,11 @@ class FotosMejoraEmpresaInline(admin.TabularInline):
 class DiasCampoEmpresaInline(admin.TabularInline):
     model = DiasCampoEmpresa
     extra = 1
-    
+
 class MejoraEmpresarialAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            'fields': (('nombre_mejora', 'empresa', 'fecha_prueba'), 
+            'fields': (('nombre_mejora', 'empresa', 'fecha_prueba'),
                        ('tema_prueba','rubro_prueba','mercado_prueba'),
                        ('fecha_inicio','fecha_finalizacion'),)
         }),
@@ -100,11 +100,11 @@ class MejoraEmpresarialAdmin(admin.ModelAdmin):
                         'resultados',)
         }),
         ('Resultados', {
-            'fields': ('volumen_acopio', 'mejora_proce_calidad', 
+            'fields': ('volumen_acopio', 'mejora_proce_calidad',
                        'presentacion_acceso','inversion_credito',
                        'mejora_precio','mejora_ingreso','reduccion_costo',)
         }),
-        
+
     )
     inlines = [FotosMejoraEmpresaInline,DiasCampoEmpresaInline]
     list_display = ['nombre_mejora','empresa','fecha_prueba', 'tema_prueba','color_completo']

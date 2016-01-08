@@ -1,11 +1,10 @@
-#encoding: utf-8
-
+# -*- coding: utf-8 -*-
 from django.db import models
 from lugar.models import Departamento, Municipio
 from smart_selects.db_fields import ChainedForeignKey
 from geoposition.fields import GeopositionField
 from sorl.thumbnail import ImageField
-from simasinnovacion.utils import get_file_path 
+from simasinnovacion.utils import get_file_path
 from promotores.models import OrganizacionCivil
 from django.contrib.auth.models import User
 
@@ -30,6 +29,7 @@ class Rubros(models.Model):
 
     class Meta:
         verbose_name_plural = "Rubros"
+        ordering = ('nombre', )
 
 #-----------------------------------------------------------
 #                  ficha de las empresas rurales
@@ -86,10 +86,10 @@ class RubrosPrincipales(models.Model):
     socias = models.IntegerField()
 
     def __unicode__(self):
-        return u'%s' % str(self.rubro)
+        return u'%s' % self.rubro
 
     class Meta:
-        verbose_name_plural = "Rubros principales de la empresa" 
+        verbose_name_plural = "Rubros principales de la empresa"
 
 class ActividadesEmpresariales(models.Model):
     nombre = models.CharField(max_length=200)
@@ -140,6 +140,9 @@ class ActividadEmpresarial(models.Model):
     #rubro_2 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
     #rubro_3 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
 
+    def __unicode__(self):
+        return u'%s' % (self.rubros)
+
     class Meta:
         verbose_name_plural = "Actividad empresarial relacionadas a los rubros"
 
@@ -150,6 +153,9 @@ class MercadosRubros(models.Model):
     #rubro_1 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
     #rubro_2 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
     #rubro_3 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
+
+    def __unicode__(self):
+        return u'%s -- %s' % (self.rubros, self.empresa)
 
     class Meta:
         verbose_name_plural = "Mercados de los rubros"
@@ -162,6 +168,9 @@ class CompradoresRubros(models.Model):
     #rubro_2 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
     #rubro_3 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
 
+    def __unicode__(self):
+        return u'%s' % self.rubros
+
     class Meta:
         verbose_name_plural = "Compradores de los rubros"
 
@@ -172,6 +181,9 @@ class CertificacionesRubros(models.Model):
     #rubro_1 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
     #rubro_2 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
     #rubro_3 = models.IntegerField(choices=CHOICES_SI_N0, null=True, blank=True)
+
+    def __unicode__(self):
+        return u'%s' % self.rubros
 
     class Meta:
         verbose_name_plural = "Certificaciones de los rubros"
@@ -242,7 +254,7 @@ class MejoraEmpresas(models.Model):
     color_completo.short_description = 'Ficha completa'
 
     def __unicode__(self):
-        return u'%s' % (self.nombre_mejora)
+        return u'%s' % self.nombre_mejora
 
     def get_fotos(self):
         fotos = FotosMejoraEmpresa.objects.filter(mejora_empresa__id = self.id)
@@ -260,7 +272,7 @@ class DiasCampoEmpresa(models.Model):
     comentario = models.TextField()
 
     def __unicode__(self):
-        return 'Dias de campos de: %s' % self.mejora_empresa
+        return u'Dias de campos de: %s' % self.mejora_empresa
 
     class Meta:
         verbose_name_plural = "Dias de campos de las pruebas"

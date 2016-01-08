@@ -48,19 +48,19 @@ def inicio(request, template="inicio.html"):
     lista_empresas_zonas = []
     for obj in choice_zonas:
         lista_empresas_zonas.append([str(obj[1]), Empresas.objects.filter(zona=obj[0]).count()])
-    
+
     #graficos de las mejoras de las empresas
     mejoras_empresa = MejoraEmpresas.objects.count()
     #grafica de los temas de mejoras en las empresas
     lista_mejora_empresa = []
     for obj in TemasEmpresa.objects.all():
-        lista_mejora_empresa.append([obj.nombre, 
+        lista_mejora_empresa.append([obj.nombre,
                                     MejoraEmpresas.objects.filter(tema_prueba=obj).count()])
-    
+
     #grafico de los mercados de las pruebas sobre mejora de las empresas
     lista_mercados = []
     for obj in Mercados.objects.all():
-        lista_mercados.append([obj.nombre, 
+        lista_mercados.append([obj.nombre,
                                MejoraEmpresas.objects.filter(mercado_prueba=obj).count()])
 
     #graficos de los espacios
@@ -68,12 +68,12 @@ def inicio(request, template="inicio.html"):
     #graficos de tipos de espacios
     lista_espacios = []
     for obj in TipoEspacio.objects.all():
-        lista_espacios.append([obj.nombre, 
+        lista_espacios.append([obj.nombre,
                              EspacioInnovacion.objects.filter(tipos=obj).count()])
     #grafico de papel de simas
     lista_papel_simas = []
     for obj in PapelSimas.objects.all():
-        lista_papel_simas.append([obj.nombre, 
+        lista_papel_simas.append([obj.nombre,
                                  EspacioInnovacion.objects.filter(papel=obj).count()])
     #graficos de las iniciativas politicas
     iniciativas = IniciativaInnovacion.objects.count()
@@ -92,15 +92,15 @@ def inicio(request, template="inicio.html"):
         a = IniciativaInnovacion.objects.filter(anio=year).count()
         numero_iniciativa.append([year,a])
 
-    #graficos de fortalecimiento 
+    #graficos de fortalecimiento
     fortalecimientos = MediosFortalecimiento.objects.count()
     tipo_medio = []
     for obj in TiposMedios.objects.all():
-        tipo_medio.append([obj.nombre, 
+        tipo_medio.append([obj.nombre,
                            MediosFortalecimiento.objects.filter(tipo_medio=obj).count()])
     simas_fotalece = []
     for obj in PapelSimas.objects.all():
-        simas_fotalece.append([obj.nombre, 
+        simas_fotalece.append([obj.nombre,
                                MediosFortalecimiento.objects.filter(papel_simas=obj).count()])
 
     #gráficos de los servicios
@@ -108,7 +108,7 @@ def inicio(request, template="inicio.html"):
     #grafico tipos de servicios
     tipo_servicios = []
     for obj in TiposServicio.objects.all():
-        tipo_servicios.append([obj.nombre, 
+        tipo_servicios.append([obj.nombre,
                               Servicios.objects.filter(tipos_servicios=obj).count()])
 
     #graficos de servicios por año
@@ -127,23 +127,23 @@ def inicio(request, template="inicio.html"):
 
 def _queryset_filtrado(request):
     params = {}
-    if 'zona' in request.session:
+    if request.session['zona']:
         params['zona'] = request.session['zona']
-    if 'organizacion_civil' in request.session:
-        params['organizacion_civil'] = request.session['organizacion_civil']
-    if 'sexo' in request.session:
+    if request.session['organizacion_civil']:
+        params['organizacion_civil__in'] = request.session['organizacion_civil']
+    if request.session['sexo']:
         params['sexo'] = request.session['sexo']
-    if 'activo' in request.session:
-        params['activo'] = request.session['activo']
+    if request.session['activo']:
+        params['activo__in'] = request.session['activo']
 
     unvalid_keys = []
     for key in params:
         if not params[key]:
             unvalid_keys.append(key)
-    
+
     for key in unvalid_keys:
         del params[key]
-    
+
     return Promotor.objects.filter(**params)
 
 
@@ -151,7 +151,7 @@ def promotor_index(request, template="promotor/promotor.html"):
     if request.method == 'POST':
         form = PromotorForm(request.POST)
         if form.is_valid():
-            request.session['zona'] = form.cleaned_data['zona']            
+            request.session['zona'] = form.cleaned_data['zona']
             request.session['organizacion_civil'] = form.cleaned_data['organizacion_civil']
             request.session['sexo'] = form.cleaned_data['sexo']
             request.session['activo'] = form.cleaned_data['activo']
@@ -164,7 +164,7 @@ def promotor_index(request, template="promotor/promotor.html"):
         con = _queryset_filtrado(request)
     else:
         con = ''
-    
+
     return render(request, template, {'form':form,
                                       'lista_promotor':con})
 
@@ -183,10 +183,10 @@ def mapa_completo(request):
             params = Promotor.objects.all()
 
         for objeto in params:
-            dicc = dict(nombre=objeto.nombre, 
+            dicc = dict(nombre=objeto.nombre,
                         id=objeto.id,
                         identificador=objeto.identificador,
-                        lon=float(objeto.gps.longitude) , 
+                        lon=float(objeto.gps.longitude) ,
                         lat=float(objeto.gps.latitude),
                         )
             lista.append(dicc)
@@ -200,10 +200,10 @@ def mapa_completo_index(request):
     if request.is_ajax():
         lista = []
         for objeto in Promotor.objects.all():
-            dicc = dict(nombre=objeto.nombre, 
+            dicc = dict(nombre=objeto.nombre,
                         id=objeto.id,
                         identificador=objeto.identificador,
-                        lon=float(objeto.gps.longitude) , 
+                        lon=float(objeto.gps.longitude) ,
                         lat=float(objeto.gps.latitude),
                         )
             lista.append(dicc)
@@ -218,10 +218,10 @@ def mapa_completo_index(request):
 
         for obj in EspacioInnovacion.objects.all():
             for objeto in obj.municipios_influye.all():
-                dicc = dict(nombre=obj.nombre, 
+                dicc = dict(nombre=obj.nombre,
                             id=obj.id,
                             identificador=obj.identificador,
-                            lon=float(objeto.longitud), 
+                            lon=float(objeto.longitud),
                             lat=float(objeto.latitud),
                         )
                 lista.append(dicc)
@@ -248,10 +248,10 @@ def _queryset_filtrado_practica(request):
     for key in params:
         if not params[key]:
             unvalid_keys.append(key)
-    
+
     for key in unvalid_keys:
         del params[key]
-    
+
     return PracticasProductivas.objects.filter(**params)
 
 
@@ -260,7 +260,7 @@ def practicas_index(request, template="promotor/practica.html"):
         form = PracticaForm(request.POST)
         if form.is_valid():
             request.session['zona'] = form.cleaned_data['zona']
-            request.session['anio'] = form.cleaned_data['anio']         
+            request.session['anio'] = form.cleaned_data['anio']
             request.session['tema_prueba'] = form.cleaned_data['tema_prueba']
             request.session['rubro_prueba'] = form.cleaned_data['rubro_prueba']
             request.session['escala_prueba'] = form.cleaned_data['escala_prueba']
@@ -273,7 +273,7 @@ def practicas_index(request, template="promotor/practica.html"):
         con = _queryset_filtrado_practica(request)
     else:
         con = ''
-    
+
     return render(request, template, {'form':form,
                                       'lista_practica':con})
 
@@ -287,9 +287,9 @@ def mapa_completo_practica(request):
             params = PracticasProductivas.objects.all()
 
         for objeto in params:
-            dicc = dict(nombre=objeto.nombre_prueba, 
+            dicc = dict(nombre=objeto.nombre_prueba,
                         id=objeto.id,
-                        lon=float(objeto.promotor.gps.longitude) , 
+                        lon=float(objeto.promotor.gps.longitude) ,
                         lat=float(objeto.promotor.gps.latitude),
                         )
             lista.append(dicc)
@@ -346,19 +346,19 @@ def gempresas(request, template="gempresas.html"):
     lista_empresas_zonas = []
     for obj in choice_zonas:
         lista_empresas_zonas.append([str(obj[1]), Empresas.objects.filter(zona=obj[0]).count()])
-    
+
     #graficos de las mejoras de las empresas
     mejoras_empresa = MejoraEmpresas.objects.count()
     #grafica de los temas de mejoras en las empresas
     lista_mejora_empresa = []
     for obj in TemasEmpresa.objects.all():
-        lista_mejora_empresa.append([obj.nombre, 
+        lista_mejora_empresa.append([obj.nombre,
                                     MejoraEmpresas.objects.filter(tema_prueba=obj).count()])
-    
+
     #grafico de los mercados de las pruebas sobre mejora de las empresas
     lista_mercados = []
     for obj in Mercados.objects.all():
-        lista_mercados.append([obj.nombre, 
+        lista_mercados.append([obj.nombre,
                                MejoraEmpresas.objects.filter(mercado_prueba=obj).count()])
     return render(request, template, locals())
 
@@ -369,12 +369,12 @@ def gespacios(request, template="gespacios.html"):
     #graficos de tipos de espacios
     lista_espacios = []
     for obj in TipoEspacio.objects.all():
-        lista_espacios.append([obj.nombre, 
+        lista_espacios.append([obj.nombre,
                              EspacioInnovacion.objects.filter(tipos=obj).count()])
     #grafico de papel de simas
     lista_papel_simas = []
     for obj in PapelSimas.objects.all():
-        lista_papel_simas.append([obj.nombre, 
+        lista_papel_simas.append([obj.nombre,
                                  EspacioInnovacion.objects.filter(papel=obj).count()])
     #graficos de las iniciativas politicas
     iniciativas = IniciativaInnovacion.objects.count()
@@ -394,17 +394,17 @@ def gespacios(request, template="gespacios.html"):
         numero_iniciativa.append([year,a])
     return render(request, template, locals())
 
-def gservicios(request, template="gservicios.html"):    
+def gservicios(request, template="gservicios.html"):
     choice_zonas=((1, 'Seca'),(2, 'Alta'),(3,'Húmeda'),)
-    #graficos de fortalecimiento 
+    #graficos de fortalecimiento
     fortalecimientos = MediosFortalecimiento.objects.count()
     tipo_medio = []
     for obj in TiposMedios.objects.all():
-        tipo_medio.append([obj.nombre, 
+        tipo_medio.append([obj.nombre,
                            MediosFortalecimiento.objects.filter(tipo_medio=obj).count()])
     simas_fotalece = []
     for obj in PapelSimas.objects.all():
-        simas_fotalece.append([obj.nombre, 
+        simas_fotalece.append([obj.nombre,
                                MediosFortalecimiento.objects.filter(papel_simas=obj).count()])
 
     #gráficos de los servicios
@@ -412,7 +412,7 @@ def gservicios(request, template="gservicios.html"):
     #grafico tipos de servicios
     tipo_servicios = []
     for obj in TiposServicio.objects.all():
-        tipo_servicios.append([obj.nombre, 
+        tipo_servicios.append([obj.nombre,
                               Servicios.objects.filter(tipos_servicios=obj).count()])
 
     #graficos de servicios por año
@@ -434,20 +434,20 @@ def _queryset_filtrado(request):
     if 'zona' in request.session:
         params['zona'] = request.session['zona']
     if 'organizacion_civil' in request.session:
-        params['organizacion_civil'] = request.session['organizacion_civil']
+        params['organizacion_civil__in'] = request.session['organizacion_civil']
     if 'sexo' in request.session:
         params['sexo'] = request.session['sexo']
     if 'activo' in request.session:
-        params['activo'] = request.session['activo']
+        params['activo__in'] = request.session['activo']
 
     unvalid_keys = []
     for key in params:
         if not params[key]:
             unvalid_keys.append(key)
-    
+
     for key in unvalid_keys:
         del params[key]
-    
+
     return Promotor.objects.filter(**params)
 
 
@@ -455,7 +455,7 @@ def promotor(request, template="promotores.html"):
     if request.method == 'POST':
         form = PromotorForm(request.POST)
         if form.is_valid():
-            request.session['zona'] = form.cleaned_data['zona']            
+            request.session['zona'] = form.cleaned_data['zona']
             request.session['organizacion_civil'] = form.cleaned_data['organizacion_civil']
             request.session['sexo'] = form.cleaned_data['sexo']
             request.session['activo'] = form.cleaned_data['activo']
@@ -468,7 +468,7 @@ def promotor(request, template="promotores.html"):
         con = _queryset_filtrado(request)
     else:
         con = ''
-    
+
     return render(request, template, {'form':form,
                                       'listar_promotor':con})
 
@@ -487,7 +487,7 @@ def prueba(request, template="prueba.html"):
         form = PracticaForm(request.POST)
         if form.is_valid():
             request.session['zona'] = form.cleaned_data['zona']
-            request.session['anio'] = form.cleaned_data['anio']         
+            request.session['anio'] = form.cleaned_data['anio']
             request.session['tema_prueba'] = form.cleaned_data['tema_prueba']
             request.session['rubro_prueba'] = form.cleaned_data['rubro_prueba']
             request.session['escala_prueba'] = form.cleaned_data['escala_prueba']
@@ -500,7 +500,7 @@ def prueba(request, template="prueba.html"):
         con = _queryset_filtrado_practica(request)
     else:
         con = ''
-    
+
     return render(request, template, {'form':form,
                                       'listar_prueba':con})
 
